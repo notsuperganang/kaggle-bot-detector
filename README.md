@@ -8,7 +8,7 @@
 
 A machine learning-based web application that predicts whether a Kaggle account is a bot or a legitimate user based on account features.
 
-![Bot Detection Banner](https://i.imgur.com/GyBcFLR.png)
+![Bot Detection Banner](img/banner.png)
 
 ## 👥 Team Members
 
@@ -139,7 +139,9 @@ Bot accounts present challenges in online platforms by distorting voting pattern
 
 ## 📸 Screenshots
 
-![Application Screenshot](img/ss.png)
+<p align="center">
+  <img src="img/ss.png" alt="Application Screenshot" width="600"/>
+</p>
 
 ## 📋 Model Performance
 
@@ -164,7 +166,7 @@ The XGBoost model achieved:
 
 ## 📜 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
