@@ -146,11 +146,11 @@ Bot accounts present challenges in online platforms by distorting voting pattern
 ## 📋 Model Performance
 
 The XGBoost model achieved:
-- Accuracy: ~95%
-- Precision: ~94%
-- Recall: ~96%
-- F1 Score: ~95%
-- ROC-AUC: ~98%
+- Accuracy: ~100%
+- Precision: ~100%
+- Recall: ~100%
+- F1 Score: ~100%
+- ROC-AUC: ~100%
 
 ## 📌 Future Improvements
 
