@@ -52,19 +52,38 @@ with st.form(key='user_input_form'):
 
     if submit_button:
         # Ketika submit, siapkan data dalam format yang akan dikirim ke backend API
-        user_input = {...}  ## lengkapi dengan data yang akan dikirim ke backend
+        # Hanya mengirim data yang dibutuhkan oleh backend sesuai dengan model yang telah dilatih
+        user_input = {
+            "follower_count": float(follower_count),
+            "following_count": float(following_count),
+            "dataset_count": float(dataset_count),
+            "code_count": float(code_count),
+            "discussion_count": float(discussion_count),
+            "avg_nb_read_time_min": float(avg_nb_read_time_min),
+            "is_glogin": is_glogin
+        }
         
         # Kirim data ke backend untuk prediksi
-        # Misalnya, Anda bisa menggunakan requests untuk mengirim data ke API FastAPI
-        response = requests.post('http://localhost:8000/predict/', json=user_input)
-        
-        # Menampilkan hasil prediksi
-        if response.status_code == 200:
-            prediction = response.json().get('prediction')
+        try:
+            response = requests.post('http://localhost:8000/predict/', json=user_input)
             
-            if prediction == 1:
-                st.write('User terdeteksi BOT.')
+            # Menampilkan hasil prediksi
+            if response.status_code == 200:
+                result = response.json()
+                prediction = result.get('is_bot')
+                probability = result.get('probability', 0) * 100  # Konversi ke persentase
+                
+                st.write('---')
+                if prediction:
+                    st.error(f'⚠️ User terdeteksi sebagai BOT dengan tingkat kepercayaan {probability:.2f}%')
+                else:
+                    st.success(f'✅ User tidak terdeteksi sebagai BOT dengan tingkat kepercayaan {100-probability:.2f}%')
+                
+                # Tampilkan detail fitur yang berkontribusi (opsional)
+                with st.expander("Detail Fitur Input"):
+                    st.json(user_input)
             else:
-                st.write('User tidak terdeteksi BOT.')
-        else:
-            st.write('Terjadi kesalahan dalam prediksi.')
+                st.error(f'Terjadi kesalahan dalam prediksi. Status code: {response.status_code}')
+                st.write(response.text)
+        except requests.exceptions.ConnectionError:
+            st.error('Tidak dapat terhubung ke backend. Pastikan server backend sedang berjalan di localhost:8000')
